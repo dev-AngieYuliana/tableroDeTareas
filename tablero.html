@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tareas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .formulario-agregar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tarea {
+            background-color: #d1e7dd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tarea:hover {
+            background-color: #b7d4c5;
+        }
+        .formulario-agregar input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+        .formulario-agregar select, .formulario-agregar button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .formulario-agregar button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .formulario-agregar button:hover {
+            background-color: #0056b3;
+        }
+        .contenedor-tareas-grande {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .columna {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            width: 20%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        .columna h2 {
+            text-align: center;
+            color: #666;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .prioridad {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .pendiente {
+            background-color: #e2e3e5;
+            color: #6c757d;
+        }
+
+        .boton-eliminar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        .boton-eliminar:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tablero de Tareas</h1>
+<div class="formulario-agregar">
+    <input type="text" id="tareaNombre" placeholder="Escribe una nueva tarea">
+    <select id="categoriaTarea">
+        <option value="prioridad">Prioridad</option>
+        <option value="pendiente">Pendientes</option>
+    </select>
+    <button onclick="agregarTarea()">Agregar Tarea</button>
+</div>
+
+<div class="contenedor-tareas-grande">
+    <div id="columnaPrioridades" class="columna">
+        <h2>Prioridad</h2>
+    </div>
+    <div id="columnaPendientes" class="columna">
+        <h2>Pendientes</h2>
+    </div>
+</div>
+
+<script>
+    function agregarTarea() {
+        const tareaNombre = document.getElementById("tareaNombre").value;
+        const categoriaTarea = document.getElementById("categoriaTarea").value;
+
+        if (tareaNombre === "") {
+            alert("Escribe una descripción para la tarea");
+            return;
+        }
+
+        const tareaDiv = document.createElement("div");
+        tareaDiv.classList.add("tarea");
+
+        const textoTarea = document.createElement("span");
+        textoTarea.textContent = tareaNombre;
+
+        const botonEliminar = document.createElement("button");
+        botonEliminar.classList.add("boton-eliminar");
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.onclick = () => tareaDiv.remove();
+
+        tareaDiv.appendChild(textoTarea);
+        tareaDiv.appendChild(botonEliminar);
+
+        if (categoriaTarea === "prioridad") {
+            tareaDiv.classList.add("prioridad");
+            document.getElementById("columnaPrioridades").appendChild(tareaDiv);
+        } else {
+            tareaDiv.classList.add("pendiente");
+            document.getElementById("columnaPendientes").appendChild(tareaDiv);
+        }
+
+        document.getElementById("tareaNombre").value = "";
+        document.getElementById("categoriaTarea").value = "prioridad";
+    }
+</script>
+</body>
+</html>
